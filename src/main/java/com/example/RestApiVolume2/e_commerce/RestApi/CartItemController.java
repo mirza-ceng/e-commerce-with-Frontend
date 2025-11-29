@@ -52,6 +52,7 @@ public class CartItemController {
     public void deleteFromCart(@RequestParam Long cartItemId, @RequestParam Long productId, @RequestParam Long userId) {
 
         cartItemService.deleteFromCart(cartItemId, productId, userId);
+        System.out.println("warning");
     }
 
 }
