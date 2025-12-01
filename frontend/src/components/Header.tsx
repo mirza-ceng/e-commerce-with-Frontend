@@ -29,10 +29,10 @@ const Header = () => {
                             <li className="nav-item">
                                 <Link className="nav-link" to="/cart">Cart</Link>
                             </li>
-                            {isAuthenticated() ? (
+                            {isAuthenticated ? (
                                 <>
                                     <li className="nav-item">
-                                        <span className="nav-link">Welcome, {user?.name}</span>
+                                        <span className="nav-link">Welcome, {user?.username}</span>
                                     </li>
                                     <li className="nav-item">
                                         <button className="btn btn-link nav-link" onClick={handleLogout}>Logout</button>
