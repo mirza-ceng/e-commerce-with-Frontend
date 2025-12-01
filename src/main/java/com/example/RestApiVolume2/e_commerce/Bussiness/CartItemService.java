@@ -137,4 +137,9 @@ public class CartItemService {
         }
 
     }
+    
+    @Transactional
+    public List<CartItem> getCartItemsByUserId(long userId) {
+        return cartItemRepository.findByUserUserId(userId);
+    }
 }

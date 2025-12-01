@@ -1,23 +1,17 @@
 package com.example.RestApiVolume2.e_commerce.RestApi.dto;
 
-
-
 public class UserCreateDto {
 
-
-    private String userName;
-   
-    
+    private String name;
     private String email;
-  
     private String password;
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -35,5 +29,4 @@ public class UserCreateDto {
     public void setPassword(String password) {
         this.password = password;
     }
-
 }

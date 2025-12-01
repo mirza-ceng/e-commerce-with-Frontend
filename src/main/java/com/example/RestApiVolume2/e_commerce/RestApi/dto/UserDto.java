@@ -2,24 +2,24 @@ package com.example.RestApiVolume2.e_commerce.RestApi.dto;
 
 public class UserDto {
 
-    private long userId;
-    private String userName;
+    private long id;
+    private String name;
     private String email;
 
-    public long getUserId() {
-        return userId;
+    public long getId() {
+        return id;
     }
 
-    public void setUserId(long userId) {
-        this.userId = userId;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getName() {
+        return name;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {

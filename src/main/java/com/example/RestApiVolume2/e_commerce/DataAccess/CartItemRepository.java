@@ -5,6 +5,8 @@
 package com.example.RestApiVolume2.e_commerce.DataAccess;
 
 import com.example.RestApiVolume2.e_commerce.Entities.CartItem;
+
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -16,7 +18,7 @@ public interface CartItemRepository extends JpaRepository<CartItem,Long>{
     
    Optional<CartItem> findByUserUserIdAndProductId(Long userId, Long productId);
     
-    
+   List<CartItem> findByUserUserId(Long userId);
     
     
 }

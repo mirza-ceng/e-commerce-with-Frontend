@@ -1,7 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
+
 package com.example.RestApiVolume2.e_commerce.Bussiness;
 
 import com.example.RestApiVolume2.e_commerce.DataAccess.UserRepository;
@@ -11,9 +9,9 @@ import com.example.RestApiVolume2.e_commerce.RestApi.dto.UserCreateDto;
 import com.example.RestApiVolume2.e_commerce.RestApi.dto.UserDto;
 import com.example.RestApiVolume2.e_commerce.RestApi.mapper.UserMapper;
 import com.example.RestApiVolume2.e_commerce.Exception.ResourceNorFoundException;
-import com.example.RestApiVolume2.e_commerce.Exception.ValidationException;
 import java.util.List;
 import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
@@ -26,35 +24,31 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class UserService {
 
-    private UserRepository userRepository;
-    private OrderService orderService;
+    private final UserRepository userRepository;
+    private final OrderService orderService;
+    private final UserMapper userMapper;
 
     @Autowired
-    public UserService( UserRepository userRepository,@Lazy OrderService orderService) {
+    public UserService( UserRepository userRepository,@Lazy OrderService orderService, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.orderService = orderService;
+        this.userMapper = userMapper;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<User> getAll() {
         return userRepository.findAll();
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public User getById(long id) {
-        Optional<User> item = userRepository.findById(id);
-
-        if (item.isPresent()) {
-            return item.get();
-        } else {
-            throw new ResourceNorFoundException("User", "id", id);
-        }
+        return userRepository.findById(id)
+                .orElseThrow(() -> new ResourceNorFoundException("User not found with id: " + id));
     }
 
     @Transactional
     public void delete(User user) {
         getById(user.getUserId());
-
         userRepository.delete(user);
     }
 
@@ -65,61 +59,36 @@ public class UserService {
     }
 
     private void insert(User user) {
-
         userRepository.save(user);
     }
 
     @Transactional
-    public User createUser(String userName, String email, String password) {
-        User user = new User();
-        user.setUserName(userName);
-        user.setEmail(email);
-        user.setPassword(password);
-        insert(user);
-        return user;
-    }
-
-    @Transactional
     public UserDto createUser(UserCreateDto dto) {
-        User user = UserMapper.toEntity(dto);
+        User user = userMapper.toUser(dto);
         insert(user);
-        return UserMapper.toDto(user);
+        return userMapper.toUserDto(user);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public UserDto getUserDtoById(long id) {
         User u = getById(id);
-        return UserMapper.toDto(u);
+        return userMapper.toUserDto(u);
     }
 
-    @Transactional
-    public User logIn(String userNameOrEmail, String password) {
-
-        User loggedUser = userRepository.findByUserNameOrEmail(userNameOrEmail, userNameOrEmail);
-
-        if (loggedUser == null) {
-            throw new ValidationException("COULDN'T FİND USER!!");
-        }
-
-        if (loggedUser.getPassword().equals(password)) {
-            return loggedUser;
-        } else {
-            throw new ValidationException("COULDN'T FİND USER!!");
-        }
-
+    @Transactional(readOnly = true)
+    public Optional<User> findByEmail(String email) {
+        return userRepository.findByEmail(email);
     }
 
     @Transactional
     public void cancelOrderOfUser(User user, Long orderId) {
-       
+
         Order order = orderService.getById(orderId);
         if (user.getOrders().contains(order)) {
             user.getOrders().remove(order);
             update(user);
         } else {
-            throw new ResourceNorFoundException("Order", "Order", order);
+            throw new ResourceNorFoundException("Order not found with id: " + orderId);
         }
-
     }
-
 }

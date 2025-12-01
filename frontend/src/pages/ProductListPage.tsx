@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { getProducts } from "../services/ProductService";
 import { Product } from "../types";
+import { useAuth } from "../services/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 interface ProductListProps {
   limit?: number;
@@ -11,6 +13,8 @@ const ProductListPage = ({ limit, title }: ProductListProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -27,6 +31,15 @@ const ProductListPage = ({ limit, title }: ProductListProps) => {
 
     fetchProducts();
   }, []);
+
+  const handleAddToCart = (product: Product) => {
+    if (isAuthenticated()) {
+      // Logic to add product to cart
+      console.log(`${product.name} added to cart`);
+    } else {
+      navigate("/login");
+    }
+  };
 
   if (loading) {
     return <div className="container mt-4">Loading...</div>;
@@ -51,7 +64,12 @@ const ProductListPage = ({ limit, title }: ProductListProps) => {
                 <p className="card-text">
                   <small>Stock: {product.stock}</small>
                 </p>
-                <button className="btn btn-primary">Add to Cart</button>
+                <button
+                  className="btn btn-primary"
+                  onClick={() => handleAddToCart(product)}
+                >
+                  Add to Cart
+                </button>
               </div>
             </div>
           </div>

@@ -4,3 +4,10 @@ export interface Product {
   price: number;
   stock: number;
 }
+
+export interface User {
+  id: number;
+  username: string;
+  email: string;
+  // Buraya rol veya token gibi diğer kullanıcı özelliklerini ekleyebilirsiniz
+}
