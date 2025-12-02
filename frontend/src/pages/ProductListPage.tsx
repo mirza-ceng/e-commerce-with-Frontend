@@ -33,7 +33,7 @@ const ProductListPage = ({ limit, title }: ProductListProps) => {
   }, []);
 
   const handleAddToCart = (product: Product) => {
-    if (isAuthenticated()) {
+    if (isAuthenticated) {
       // Logic to add product to cart
       console.log(`${product.name} added to cart`);
     } else {
