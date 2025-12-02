@@ -23,8 +23,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class ProductService {
 
-    private ProductRepository productRepository;
-    private UserService userService;
+    private final ProductRepository productRepository;
+    private final UserService userService;
 
     @Autowired
 

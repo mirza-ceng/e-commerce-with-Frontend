@@ -22,8 +22,8 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 public class OrderItemService {
 
-    private OrderItemRepository orderItemRepository;
-    private CartItemService cartItemService;
+    private final OrderItemRepository orderItemRepository;
+    private final CartItemService cartItemService;
 
     @Autowired
     public OrderItemService(OrderItemRepository orderItemRepository,@Lazy CartItemService cartItemService) {
