@@ -12,7 +12,7 @@ const LoginPage: React.FC = () => {
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
         try {
-            const user = await login({ email, password, name: '' });
+            const user = await login({ email, password });
             auth.login(user);
             navigate('/');
         } catch (error) {
