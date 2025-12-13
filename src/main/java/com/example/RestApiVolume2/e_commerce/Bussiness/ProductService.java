@@ -51,6 +51,7 @@ public class ProductService {
 
     }
 
+    @SuppressWarnings("null")
     @Transactional
 
     public void delete(Long id) {
@@ -76,6 +77,7 @@ public class ProductService {
         productRepository.save(product);
     }
 
+    @SuppressWarnings("null")
     private void insert(Product product) {
         productRepository.save(product);
     }

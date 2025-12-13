@@ -58,6 +58,7 @@ public class OrderItemService {
 
     }
 
+    @SuppressWarnings("null")
     @Transactional
 
     public void delete(Long id) {
@@ -74,6 +75,7 @@ public class OrderItemService {
         orderItemRepository.save(orderItem);
     }
 
+    @SuppressWarnings("null")
     @Transactional
 
     public void insert(OrderItem orderItem) {

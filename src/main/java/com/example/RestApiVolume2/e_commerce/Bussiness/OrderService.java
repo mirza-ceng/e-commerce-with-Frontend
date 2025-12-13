@@ -75,6 +75,7 @@ public class OrderService {
         orderRepository.save(order);
     }
 
+    @SuppressWarnings("null")
     private void insert(Order order) {
         orderRepository.save(order);
     }

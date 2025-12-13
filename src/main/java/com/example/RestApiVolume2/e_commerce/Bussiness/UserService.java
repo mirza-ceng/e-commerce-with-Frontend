@@ -58,6 +58,7 @@ public class UserService {
         userRepository.save(user);
     }
 
+    @SuppressWarnings("null")
     private void insert(User user) {
         userRepository.save(user);
     }

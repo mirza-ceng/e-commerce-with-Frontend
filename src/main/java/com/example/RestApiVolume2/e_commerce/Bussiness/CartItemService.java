@@ -7,6 +7,8 @@ package com.example.RestApiVolume2.e_commerce.Bussiness;
 import com.example.RestApiVolume2.e_commerce.DataAccess.CartItemRepository;
 
 import com.example.RestApiVolume2.e_commerce.Entities.CartItem;
+import com.example.RestApiVolume2.e_commerce.Entities.Product;
+import com.example.RestApiVolume2.e_commerce.Entities.User;
 import com.example.RestApiVolume2.e_commerce.Exception.ResourceNorFoundException;
 import com.example.RestApiVolume2.e_commerce.Exception.ValidationException;
 import java.util.List;
@@ -53,6 +55,7 @@ public class CartItemService {
 
     }
 
+    @SuppressWarnings("null")
     @Transactional
 
     public void delete(CartItem cartItem) {
@@ -68,6 +71,7 @@ public class CartItemService {
         cartItemRepository.save(cartItem);
     }
 
+    @SuppressWarnings("null")
     @Transactional
 
     public void insert(CartItem cartItem) {
@@ -76,45 +80,42 @@ public class CartItemService {
     }
 
     @Transactional
-
     public CartItem addToCart(long productId, long userId, int quantity) {
-        Optional<CartItem> item = cartItemRepository.findByUserUserIdAndProductId(userId, productId);
+        // Fetch the User and the Product first
+        User user = userService.getById(userId);
+        Product product = productService.getById(productId);
 
-        if (item.isPresent()) {
-            // sepette var
-            CartItem existing = item.get();
-            existing.setQuantity(existing.getQuantity() + quantity);
-            update(existing);
-            // kullanıcı nesnesini alıp eşleşen cartItem'ın quantity'sini güncelle
-            var user = userService.getById(userId);
-            if (user != null) {
-                user.getCartItems().stream()
-                        .filter(ci -> ci.getId() == existing.getId())
-                        .findFirst()
-                        .ifPresent(ci -> ci.setQuantity(existing.getQuantity()));
+        // Check if the item is already in the user's cart
+        Optional<CartItem> existingItemOptional = user.getCartItems().stream()
+                .filter(item -> item.getProduct().getId() == productId)
+                .findFirst();
+
+        if (existingItemOptional.isPresent()) {
+            // Item exists, update quantity
+            CartItem existingItem = existingItemOptional.get();
+            // First check stock
+            if (!productService.stockControl(productId, quantity)) {
+                throw new ValidationException("Stock isn't enough!!");
             }
-            return existing;
+            existingItem.setQuantity(existingItem.getQuantity() + quantity);
+            // The transaction will automatically save the updated item
+            return existingItem;
         } else {
-            // sepette yok
-
-            if (productService.stockControl(productId, quantity)) {
-
-                CartItem cartItem = new CartItem();
-                cartItem.setProduct(productService.getById(productId));
-                cartItem.setUser(userService.getById(userId));
-                cartItem.setQuantity(quantity);
-
-                insert(cartItem);
-                var user = userService.getById(userId);
-                if (user != null) {
-
-                    user.addCartItem(cartItem);
-                }
-                return cartItem;
-
+            // Item does not exist, check stock and add it
+            if (!productService.stockControl(productId, quantity)) {
+                throw new ValidationException("Stock isn't enough!!");
             }
-            throw new ValidationException("Stock isn't enough!!");
 
+            CartItem newCartItem = new CartItem();
+            newCartItem.setProduct(product);
+            newCartItem.setUser(user); // Set the owning side
+            newCartItem.setQuantity(quantity);
+
+            user.getCartItems().add(newCartItem); // Add to the user's list
+
+            // Because of CascadeType.ALL on User.cartItems, we don't need to save the cartItem explicitly.
+            // The changes to the User entity will be detected and persisted at the end of the transaction.
+            return newCartItem;
         }
 
     }

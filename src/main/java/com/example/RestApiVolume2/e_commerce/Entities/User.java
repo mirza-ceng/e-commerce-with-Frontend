@@ -33,9 +33,9 @@ public class User {
     private UserRole role = UserRole.CUSTOMER;
 
     @OneToMany(mappedBy = "user")
-    private List<Order> orders;
-    @OneToMany(mappedBy = "user")
-    private List<CartItem> cartItems;
+    private List<Order> orders = new java.util.ArrayList<>();
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CartItem> cartItems = new java.util.ArrayList<>();
 
     public void addCartItem(CartItem item) {
         if (cartItems == null) {

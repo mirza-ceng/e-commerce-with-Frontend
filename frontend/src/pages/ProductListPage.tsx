@@ -3,6 +3,7 @@ import { getProducts } from "../services/ProductService";
 import { Product } from "../types";
 import { useAuth } from "../services/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { addToCart } from "../services/CartService";
 
 interface ProductListProps {
   limit?: number;
@@ -13,7 +14,7 @@ const ProductListPage = ({ limit, title }: ProductListProps) => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { isAuthenticated } = useAuth();
+  const { user, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -32,11 +33,17 @@ const ProductListPage = ({ limit, title }: ProductListProps) => {
     fetchProducts();
   }, []);
 
-  const handleAddToCart = (product: Product) => {
-    if (isAuthenticated) {
-      // Logic to add product to cart
-      console.log(`${product.name} added to cart`);
+  const handleAddToCart = async (productId: number) => {
+    if (isAuthenticated && user) {
+      try {
+        await addToCart(productId, user.id, 1);
+        alert("Product added to cart successfully!");
+      } catch (error) {
+        console.error("Failed to add product to cart:", error);
+        alert("Failed to add product to cart. Please try again.");
+      }
     } else {
+      alert("You must be logged in to add items to the cart.");
       navigate("/login");
     }
   };
@@ -66,7 +73,7 @@ const ProductListPage = ({ limit, title }: ProductListProps) => {
                 </p>
                 <button
                   className="btn btn-primary"
-                  onClick={() => handleAddToCart(product)}
+                  onClick={() => handleAddToCart(product.id)}
                 >
                   Add to Cart
                 </button>
