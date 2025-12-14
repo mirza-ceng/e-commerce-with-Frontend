@@ -6,7 +6,7 @@ export interface Product {
 }
 
 export interface User {
-  id: number;
+  userId: number;
   username: string;
   email: string;
   // Buraya rol veya token gibi diğer kullanıcı özelliklerini ekleyebilirsiniz

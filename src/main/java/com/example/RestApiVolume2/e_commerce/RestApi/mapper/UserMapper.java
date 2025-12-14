@@ -18,7 +18,7 @@ public class UserMapper {
 
     public UserDto toUserDto(User u) {
         UserDto d = new UserDto();
-        d.setId(u.getUserId());
+        d.setUserId(u.getUserId());
         d.setName(u.getUserName());
         d.setEmail(u.getEmail());
         return d;

@@ -36,7 +36,7 @@ const ProductListPage = ({ limit, title }: ProductListProps) => {
   const handleAddToCart = async (productId: number) => {
     if (isAuthenticated && user) {
       try {
-        await addToCart(productId, user.id, 1);
+        await addToCart(productId, user.userId, 1);
         alert("Product added to cart successfully!");
       } catch (error) {
         console.error("Failed to add product to cart:", error);

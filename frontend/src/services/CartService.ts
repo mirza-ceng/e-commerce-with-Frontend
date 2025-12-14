@@ -7,10 +7,6 @@ export const addToCart = async (productId: number, userId: number, quantity: num
   params.append('userId', String(userId));
   params.append('quantity', String(quantity));
 
-  const response = await api.post('/cartItems', params, {
-    headers: {
-      'Content-Type': 'application/x-www-form-urlencoded',
-    },
-  });
+  const response = await api.post('/cartItems', params);
   return response.data;
 };
