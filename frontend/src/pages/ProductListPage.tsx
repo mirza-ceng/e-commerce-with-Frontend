@@ -38,9 +38,9 @@ const ProductListPage = ({ limit, title }: ProductListProps) => {
       try {
         await addToCart(productId, user.userId, 1);
         alert("Product added to cart successfully!");
-      } catch (error) {
+      } catch (error: any) {
         console.error("Failed to add product to cart:", error);
-        alert("Failed to add product to cart. Please try again.");
+        alert(error.message);
       }
     } else {
       alert("You must be logged in to add items to the cart.");

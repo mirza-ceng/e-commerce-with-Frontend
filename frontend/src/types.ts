@@ -4,6 +4,12 @@ export interface Product {
   price: number;
   stock: number;
 }
+export interface CartItem {
+  id: number;
+  product: Product;
+  quantity: number;
+}
+
 
 export interface User {
   userId: number;
