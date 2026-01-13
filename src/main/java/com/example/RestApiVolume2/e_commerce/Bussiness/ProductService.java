@@ -102,6 +102,16 @@ public class ProductService {
     }
 
     @Transactional
+    public void reduceStock(long productId, int quantity) {
+        Product product = getById(productId);
+        if (product.getStock() < quantity) {
+            throw new ValidationException("Insufficient stock for product: " + product.getName());
+        }
+        product.setStock(product.getStock() - quantity);
+        productRepository.save(product);
+    }
+
+    @Transactional
     public Product addProduct(Long userId, String name, Double price, int stock) {
 
         if (userService.getById(userId).getRole() != User.UserRole.ADMİN) {

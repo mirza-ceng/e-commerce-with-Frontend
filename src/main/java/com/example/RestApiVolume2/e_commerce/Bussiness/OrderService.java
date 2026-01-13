@@ -87,10 +87,20 @@ public class OrderService {
         List<CartItem> cartItems = user.getCartItems();
         List<OrderItem> items = new ArrayList<>();
         double totalPrice = 0;
+
+        // Stok kontrolü
+        for (CartItem ci : cartItems) {
+            if (!productService.stockControl(ci.getProduct().getId(), ci.getQuantity())) {
+                throw new ValidationException("Insufficient stock for product: " + ci.getProduct().getName());
+            }
+        }
+
         for (int i = 0; i < cartItems.size(); i++) {
             OrderItem oi = orderItemService.cartItemToOrderItem(cartItems.get(i).getId());
             items.add(oi);
             totalPrice = totalPrice + (oi.getPrice() * oi.getQuantity());
+            // Stok düşme
+            productService.reduceStock(oi.getProduct().getId(), oi.getQuantity());
         }
         // sepet itemleri sipariş itemlerine dönüştürüldü
         Order order = new Order();
