@@ -17,3 +17,10 @@ export interface User {
   email: string;
   // Buraya rol veya token gibi diğer kullanıcı özelliklerini ekleyebilirsiniz
 }
+
+export interface Order {
+  id: number;
+  totalPrice: number;
+  status: string;
+  createdAt: string;
+}

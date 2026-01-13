@@ -144,4 +144,29 @@ public class CartItemService {
     public List<CartItem> getCartItemsByUserId(long userId) {
         return cartItemRepository.findByUserUserId(userId);
     }
+
+    @Transactional
+    public CartItem updateQuantity(long cartItemId, int quantity) {
+        CartItem cartItem = getById(cartItemId);
+        if (cartItem != null) {
+            // Check stock before updating
+            if (!productService.stockControl(cartItem.getProduct().getId(), quantity)) {
+                throw new ValidationException("Stock isn't enough!!");
+            }
+            cartItem.setQuantity(quantity);
+            update(cartItem);
+            return cartItem;
+        }
+        throw new ResourceNorFoundException("CartItem", "id", cartItemId);
+    }
+
+    @Transactional
+    public void deleteCartItem(long cartItemId) {
+        CartItem cartItem = getById(cartItemId);
+        if (cartItem != null) {
+            delete(cartItem);
+        } else {
+            throw new ResourceNorFoundException("CartItem", "id", cartItemId);
+        }
+    }
 }

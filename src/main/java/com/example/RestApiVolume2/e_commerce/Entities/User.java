@@ -6,6 +6,7 @@ package com.example.RestApiVolume2.e_commerce.Entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  */
 @Entity
 @Table(name = "user")
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
 
     @Id
@@ -36,7 +38,7 @@ public class User {
     @OneToMany(mappedBy = "user")
     @JsonIgnore
     private List<Order> orders = new java.util.ArrayList<>();
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonIgnore
     private List<CartItem> cartItems = new java.util.ArrayList<>();
 

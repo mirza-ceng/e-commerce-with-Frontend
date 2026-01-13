@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -42,10 +43,30 @@ public class CartItemController {
         return cartItemService.getAll();
     }
 
+    @GetMapping("/user/{userId}")
+    public List<CartItem> getCartItemsByUser(@PathVariable Long userId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("User ID cannot be null");
+        }
+        return cartItemService.getCartItemsByUserId(userId);
+    }
+
     @PostMapping
     public CartItem addToCart(@RequestParam Long productId, @RequestParam Long userId, @RequestParam Integer quantity) {
-
+        if (productId == null || userId == null || quantity == null) {
+            throw new IllegalArgumentException("Product ID, User ID, and quantity cannot be null");
+        }
         return cartItemService.addToCart(productId, userId, quantity);
+    }
+
+    @PutMapping("/{id}")
+    public CartItem updateQuantity(@PathVariable Long id, @RequestParam Integer quantity) {
+        return cartItemService.updateQuantity(id, quantity);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCartItem(@PathVariable Long id) {
+        cartItemService.deleteCartItem(id);
     }
 
     @DeleteMapping

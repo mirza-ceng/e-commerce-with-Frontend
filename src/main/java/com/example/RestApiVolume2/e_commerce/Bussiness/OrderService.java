@@ -95,17 +95,18 @@ public class OrderService {
         // sepet itemleri sipariş itemlerine dönüştürüldü
         Order order = new Order();
 
-        order.setOrderItems(items);
         order.setUser(user);
         order.setTotalPrice(totalPrice);
-        this.insert(order);
+        order.setStatus(OrderStatus.PENDİNG);
+        this.insert(order); // Order'ı önce kaydet, ID alsın
+
         for (OrderItem item : items) {
-
-            item.setOrder(order);
-
-            orderItemService.insert(item);
-
+            item.setOrder(order); // Order referansını ayarla
+            orderItemService.insert(item); // OrderItem'ı kaydet
         }
+
+        // Order'ın orderItems listesini güncelle
+        order.setOrderItems(items);
 
         // sepetten silme
         for (CartItem ci : user.getCartItems()) {

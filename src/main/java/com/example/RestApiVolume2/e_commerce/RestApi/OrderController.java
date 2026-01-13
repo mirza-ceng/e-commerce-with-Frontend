@@ -38,11 +38,13 @@ public class OrderController {
         return orderService.getAll();
     }
 
-    @PostMapping("/{id}")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Order createOrder(Long id) {
-
-        return orderService.createOrder(id);
+    public Order createOrder(@RequestParam Long userId) {
+        if (userId == null) {
+            throw new IllegalArgumentException("User ID cannot be null");
+        }
+        return orderService.createOrder(userId);
     }
 
     @DeleteMapping("/{id}")
