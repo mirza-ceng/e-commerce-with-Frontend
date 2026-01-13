@@ -6,6 +6,7 @@ package com.example.RestApiVolume2.e_commerce.Entities;
 
 import jakarta.persistence.*;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -28,9 +29,11 @@ public class Product {
 
     //description...
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private List<CartItem> cartItems;
 
     @OneToMany(mappedBy = "product")
+    @JsonIgnore
     private List<OrderItem> orderItems;
 
     public long getId() {

@@ -5,6 +5,7 @@
 package com.example.RestApiVolume2.e_commerce.Entities;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -22,6 +23,7 @@ public class CartItem {
     private int quantity;
 
    @ManyToOne(fetch = FetchType.LAZY)
+   @JsonIgnore
     private User user;
    @ManyToOne(fetch = FetchType.LAZY)
     private Product product;

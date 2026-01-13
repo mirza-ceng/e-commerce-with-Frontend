@@ -7,6 +7,7 @@ package com.example.RestApiVolume2.e_commerce.Entities;
 import jakarta.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -38,6 +39,7 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnore
     private User user;
 
     /**
@@ -135,4 +137,3 @@ public class Order {
 
     
 }
-

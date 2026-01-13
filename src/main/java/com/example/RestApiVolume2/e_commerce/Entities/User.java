@@ -5,6 +5,7 @@
 package com.example.RestApiVolume2.e_commerce.Entities;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import java.util.List;
 
@@ -33,8 +34,10 @@ public class User {
     private UserRole role = UserRole.CUSTOMER;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Order> orders = new java.util.ArrayList<>();
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<CartItem> cartItems = new java.util.ArrayList<>();
 
     public void addCartItem(CartItem item) {

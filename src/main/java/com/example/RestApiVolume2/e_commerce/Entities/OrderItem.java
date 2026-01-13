@@ -5,6 +5,7 @@
 package com.example.RestApiVolume2.e_commerce.Entities;
 
 import jakarta.persistence.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 /**
  *
@@ -27,10 +28,12 @@ public class OrderItem {
     
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="order_id",nullable =false)
+    @JsonIgnore
     private Order order;
-    
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="product_id",nullable =false)
+    @JsonIgnore
     private Product product;
 
     public long getId() {
