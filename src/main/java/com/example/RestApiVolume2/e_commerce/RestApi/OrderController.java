@@ -38,6 +38,11 @@ public class OrderController {
         return orderService.getAll();
     }
 
+    @GetMapping("/user/{userId}")
+    public List<Order> getOrdersByUser(@PathVariable Long userId) {
+        return orderService.getOrdersByUser(userId);
+    }
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Order createOrder(@RequestParam Long userId) {

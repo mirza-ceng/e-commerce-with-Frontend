@@ -24,3 +24,10 @@ export interface Order {
   status: string;
   createdAt: string;
 }
+
+export interface OrderItem {
+  id: number;
+  quantity: number;
+  price: number;
+  product: Product;
+}

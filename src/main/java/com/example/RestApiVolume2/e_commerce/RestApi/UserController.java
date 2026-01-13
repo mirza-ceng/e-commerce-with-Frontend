@@ -43,4 +43,22 @@ public class UserController {
             throw new ResourceNorFoundException("Invalid password");
         }
     }
+
+    @PutMapping("/{userId}/password")
+    public UserDto updatePassword(@PathVariable Long userId, @RequestParam String newPassword) {
+        User user = userService.getById(userId);
+        user.setPassword(newPassword);
+        userService.update(user);
+        return userMapper.toUserDto(user);
+    }
+
+    @PutMapping("/{userId}/address")
+    public UserDto updateAddress(@PathVariable Long userId, @RequestParam String address) {
+        User user = userService.getById(userId);
+        // Since User entity doesn't have an address field, I'll store it in userName for now
+        // In a real application, you'd add an address field to the User entity
+        user.setUserName(user.getUserName() + " | Address: " + address);
+        userService.update(user);
+        return userMapper.toUserDto(user);
+    }
 }

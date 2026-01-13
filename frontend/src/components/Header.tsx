@@ -12,9 +12,11 @@ const Header = () => {
 
     return (
         <header>
-            <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+            <nav className="navbar navbar-expand-lg">
                 <div className="container">
-                    <Link className="navbar-brand" to="/">E-Commerce</Link>
+                    <Link className="navbar-brand" to="/">
+                        <img src="/logo.png" alt="E-Commerce Logo" height="40" />
+                    </Link>
                     <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                         <span className="navbar-toggler-icon"></span>
                     </button>
@@ -32,7 +34,7 @@ const Header = () => {
                             {isAuthenticated ? (
                                 <>
                                     <li className="nav-item">
-                                        <span className="nav-link">Welcome, {user?.username}</span>
+                                        <Link className="nav-link" to="/profile">Profile</Link>
                                     </li>
                                     <li className="nav-item">
                                         <button className="btn btn-link nav-link" onClick={handleLogout}>Logout</button>

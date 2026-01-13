@@ -61,6 +61,11 @@ public class OrderService {
 
     }
 
+    @Transactional(readOnly = true)
+    public List<Order> getOrdersByUser(Long userId) {
+        return orderRepository.findByUserUserId(userId);
+    }
+
     @Transactional
 
     public void delete(Order order) {

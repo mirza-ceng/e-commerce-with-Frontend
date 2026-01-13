@@ -4,3 +4,12 @@
   padding: 2rem;
   text-align: center;
 }
+
+.navbar {
+  background: linear-gradient(to right, #4a3285, #2c1e5d);
+}
+
+.btn-primary {
+  background-color: #4a3285;
+  border-color: #3c286e;
+}

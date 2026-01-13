@@ -12,5 +12,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author 2005m
  */
 public interface OrderRepository extends JpaRepository<Order, Long>{
-    
+
+    java.util.List<Order> findByUserUserId(Long userId);
+
 }
