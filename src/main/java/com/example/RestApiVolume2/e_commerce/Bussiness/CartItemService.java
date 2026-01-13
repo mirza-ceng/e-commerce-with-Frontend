@@ -81,6 +81,7 @@ public class CartItemService {
 
     @Transactional
     public CartItem addToCart(long productId, long userId, int quantity) {
+       
         // Fetch the User and the Product first
         User user = userService.getById(userId);
         Product product = productService.getById(productId);
