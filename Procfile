@@ -1,0 +1,1 @@
+web: java -jar target/RestApiVolume2.e-commerce-0.0.1-SNAPSHOT.jar
