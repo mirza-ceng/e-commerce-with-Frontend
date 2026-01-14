@@ -1,5 +1,5 @@
 [build]
-builder = "maven"
+builder = "paketobuildpacks/builder-jammy-base"
 buildCommand = "mvn clean package -DskipTests"
 
 [deploy]
