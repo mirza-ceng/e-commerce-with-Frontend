@@ -24,7 +24,7 @@ const LoginPage: React.FC = () => {
     return (
         <div className="container mt-5">
             <div className="row justify-content-center">
-                <div className="col-md-6">
+                <div className="col-md-6" style={{ width: '550px' }}>
                     <div className="card">
                         <div className="card-body">
                             <h2 className="card-title text-center">Login</h2>
