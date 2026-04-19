@@ -8,7 +8,7 @@ import com.example.RestApiVolume2.e_commerce.Entities.User;
 import com.example.RestApiVolume2.e_commerce.RestApi.dto.UserCreateDto;
 import com.example.RestApiVolume2.e_commerce.RestApi.dto.UserDto;
 import com.example.RestApiVolume2.e_commerce.RestApi.mapper.UserMapper;
-import com.example.RestApiVolume2.e_commerce.Exception.ResourceNorFoundException;
+import com.example.RestApiVolume2.e_commerce.Exception.ResourceNotFoundException;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,7 +43,7 @@ public class UserService {
     @Transactional(readOnly = true)
     public User getById(long id) {
         return userRepository.findById(id)
-                .orElseThrow(() -> new ResourceNorFoundException("User not found with id: " + id));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with id: " + id));
     }
 
     @Transactional
@@ -90,7 +90,7 @@ public class UserService {
             user.getOrders().remove(order);
             update(user);
         } else {
-            throw new ResourceNorFoundException("Order not found with id: " + orderId);
+            throw new ResourceNotFoundException("Order not found with id: " + orderId);
         }
     }
 }

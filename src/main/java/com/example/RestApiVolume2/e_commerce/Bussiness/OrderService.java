@@ -11,7 +11,7 @@ import com.example.RestApiVolume2.e_commerce.Entities.Order.OrderStatus;
 import com.example.RestApiVolume2.e_commerce.Entities.OrderItem;
 import com.example.RestApiVolume2.e_commerce.Entities.Product;
 import com.example.RestApiVolume2.e_commerce.Entities.User;
-import com.example.RestApiVolume2.e_commerce.Exception.ResourceNorFoundException;
+import com.example.RestApiVolume2.e_commerce.Exception.ResourceNotFoundException;
 import com.example.RestApiVolume2.e_commerce.Exception.ValidationException;
 import java.util.ArrayList;
 import java.util.List;
@@ -56,7 +56,7 @@ public class OrderService {
         if (item.isPresent()) {
             return item.get();
         } else {
-            throw new ResourceNorFoundException("Order", "id", id);
+            throw new ResourceNotFoundException("Order", "id", id);
         }
 
     }

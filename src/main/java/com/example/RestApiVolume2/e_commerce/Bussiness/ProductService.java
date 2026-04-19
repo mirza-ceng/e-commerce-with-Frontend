@@ -7,7 +7,7 @@ package com.example.RestApiVolume2.e_commerce.Bussiness;
 import com.example.RestApiVolume2.e_commerce.DataAccess.ProductRepository;
 import com.example.RestApiVolume2.e_commerce.Entities.Product;
 import com.example.RestApiVolume2.e_commerce.Entities.User;
-import com.example.RestApiVolume2.e_commerce.Exception.ResourceNorFoundException;
+import com.example.RestApiVolume2.e_commerce.Exception.ResourceNotFoundException;
 import com.example.RestApiVolume2.e_commerce.Exception.ValidationException;
 import java.util.List;
 import java.util.Optional;
@@ -89,7 +89,7 @@ public class ProductService {
         if (item.isPresent()) {
             return item.get();
         } else {
-            throw new ResourceNorFoundException("Product", "id", id);
+            throw new ResourceNotFoundException("Product", "id", id);
         }
 
     }

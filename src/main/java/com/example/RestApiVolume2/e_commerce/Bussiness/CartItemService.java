@@ -9,7 +9,7 @@ import com.example.RestApiVolume2.e_commerce.DataAccess.CartItemRepository;
 import com.example.RestApiVolume2.e_commerce.Entities.CartItem;
 import com.example.RestApiVolume2.e_commerce.Entities.Product;
 import com.example.RestApiVolume2.e_commerce.Entities.User;
-import com.example.RestApiVolume2.e_commerce.Exception.ResourceNorFoundException;
+import com.example.RestApiVolume2.e_commerce.Exception.ResourceNotFoundException;
 import com.example.RestApiVolume2.e_commerce.Exception.ValidationException;
 import java.util.List;
 import java.util.Optional;
@@ -50,7 +50,7 @@ public class CartItemService {
         if (item.isPresent()) {
             return item.get();
         } else {
-            throw new ResourceNorFoundException("CartItem", "id", id);
+            throw new ResourceNotFoundException("CartItem", "id", id);
         }
 
     }
@@ -135,7 +135,7 @@ public class CartItemService {
             }
 
         } else {
-            throw new ResourceNorFoundException("CartItem", "id", cartItemId);
+            throw new ResourceNotFoundException("CartItem", "id", cartItemId);
         }
 
     }
@@ -157,7 +157,7 @@ public class CartItemService {
             update(cartItem);
             return cartItem;
         }
-        throw new ResourceNorFoundException("CartItem", "id", cartItemId);
+        throw new ResourceNotFoundException("CartItem", "id", cartItemId);
     }
 
     @Transactional
@@ -166,7 +166,7 @@ public class CartItemService {
         if (cartItem != null) {
             delete(cartItem);
         } else {
-            throw new ResourceNorFoundException("CartItem", "id", cartItemId);
+            throw new ResourceNotFoundException("CartItem", "id", cartItemId);
         }
     }
 }

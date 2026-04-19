@@ -7,7 +7,7 @@ package com.example.RestApiVolume2.e_commerce.Bussiness;
 import com.example.RestApiVolume2.e_commerce.DataAccess.OrderItemRepository;
 
 import com.example.RestApiVolume2.e_commerce.Entities.OrderItem;
-import com.example.RestApiVolume2.e_commerce.Exception.ResourceNorFoundException;
+import com.example.RestApiVolume2.e_commerce.Exception.ResourceNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +45,7 @@ public class OrderItemService {
         if (item.isPresent()) {
             return item.get();
         } else {
-            throw new ResourceNorFoundException("OrderItem", "id", id);
+            throw new ResourceNotFoundException("OrderItem", "id", id);
         }
 
     }

@@ -2,7 +2,7 @@ package com.example.RestApiVolume2.e_commerce.RestApi;
 
 import com.example.RestApiVolume2.e_commerce.Bussiness.UserService;
 import com.example.RestApiVolume2.e_commerce.Entities.User;
-import com.example.RestApiVolume2.e_commerce.Exception.ResourceNorFoundException;
+import com.example.RestApiVolume2.e_commerce.Exception.ResourceNotFoundException;
 import com.example.RestApiVolume2.e_commerce.RestApi.dto.UserCreateDto;
 import com.example.RestApiVolume2.e_commerce.RestApi.dto.UserDto;
 import com.example.RestApiVolume2.e_commerce.RestApi.mapper.UserMapper;
@@ -35,12 +35,12 @@ public class UserController {
     @PostMapping("/login")
     public UserDto login(@RequestBody UserCreateDto body) {
         User user = userService.findByEmail(body.getEmail())
-                .orElseThrow(() -> new ResourceNorFoundException("User not found with email: " + body.getEmail()));
+                .orElseThrow(() -> new ResourceNotFoundException("User not found with email: " + body.getEmail()));
 
         if (user.getPassword().equals(body.getPassword())) {
             return userMapper.toUserDto(user);
         } else {
-            throw new ResourceNorFoundException("Invalid password");
+            throw new ResourceNotFoundException("Invalid password");
         }
     }
 
